@@ -41,15 +41,7 @@ function getQuote(){
          		 '&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&shareSource=tumblr_share_button');
      
 			}
-			var color = Math.floor(Math.random() * colors.length);
-    		$("body").animate({
-     		  backgroundColor: colors[color],
-      		  color: colors[color]
-    		}, 1000);
-    		$(".button").animate({
-      		  backgroundColor: colors[color]
-      		}, 1000);
-      		
+		
 			$(".quote-text").animate({
 				opacity:0
 			},500,function(){
@@ -67,7 +59,15 @@ function getQuote(){
 				},500);
 				$("#author").html(r.author);
 			});
-
+			var color = Math.floor(Math.random() * colors.length);
+    		$("body").animate({
+     		  backgroundColor:colors[color],
+      		  color:colors[color]
+    		}, 1000);
+    		$(".button").animate({
+      		  backgroundColor:colors[color]
+      		}, 1000);
+      		
 			
 			
 		}
