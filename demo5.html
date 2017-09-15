@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>近观天气</title>
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.3/jquery.min.js"></script>
+		<style type="text/css">
+			body{
+				
+				background-size: 150%;
+				background-position: center;
+				background-attachment: fixed;
+			}
+			
+
+			
+			.weather-container{
+				background:rgba(255,255,255,0.5);
+				margin: 8% auto 0;
+				width: 30%;
+				border-radius: 5px;
+				box-shadow: 3px 3px 5px #333;
+			}
+			h1{
+				font-weight: 700;
+			}
+			#city{
+				padding-top: 0.5em;
+			}
+			#weather{
+				margin: 1em auto 2em
+			}
+			#temp{
+				font-size: 50px;
+				margin: 30px 0;
+			}
+			.btn{
+				font-size: 16px;
+				margin-bottom: 1em;
+			}
+
+			footer{
+				position: fixed;
+				background-color: #111;
+				color: #FFF;
+				bottom: 0;
+				width: 100%;
+			}
+		</style>	
+		<script type="text/javascript">
+			$(document).ready(function(){
+				var apiKey = '2a2f16ed169f40b1ac9580171db75746';
+				var url ='https://free-api.heweather.com/v5/weather?city=panyu&key='+apiKey;
+				$.getJSON(url,function(weatherdata){
+					var weatherInfo = weatherdata.HeWeather5[0];
+					var city = weatherInfo.basic.city + ' , ' +weatherInfo.basic.cnty;
+
+					var weather = weatherInfo.now.cond.txt;
+
+					var temp = weatherInfo.now.tmp;
+
+					$('#city').html(city);
+					$('#weather').html(weather);
+					$('#temp').html(temp + '℃');
+				
+					if (temp >= 30) {
+             			 $('body').css('background-image', 'url(img/cszc.jpg)');
+            		}
+           			 //夏天
+           			else if (temp > 22) {
+           			   $('body').css('background-image', 'url(img/laojiumen.jpg)');
+           			}
+		            //春秋
+		            else if (temp >= 10) {
+		              $('body').css('background', 'url(img/qingyunzhi.jpg)');
+		            }
+		            //冬天
+		            else {
+		              $('body').css('background', 'url(img/shushanzhanji.jpeg)');
+		            }
+
+		            $("#deg-fa").click(function(){
+		            	if ($("#temp").text().indexOf('℃') >= 0 ) {
+		            		temp =Math.round(parseInt($("#temp").text()) *1.8 + 32 );
+		            		$("#temp").html(temp + '℉');
+		            	}
+		            	else if($("#temp").text().indexOf('℉') >= 0 ) {
+            				temp = Math.round((parseInt($('#temp').text()) - 32) / 1.8);
+            				$("#temp").html(temp + '℃');	
+            			}
+            			else{
+            				$("#temp").html('未获取温度');
+            			}
+		            });
+
+
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="weather-container">
+				<div class="text-center">
+					<h1 id="city"></h1>
+					<div id="weather"></div>
+					<div id="temp"></div>
+					<button id="deg-fa" class="btn btn-default btn-xs">摄氏度℃ /华氏度℉</button>
+				</div>
+			</div>
+		</div>
+		<div>
+		</div>
+		<footer class="row text-center">
+				
+				<div class="col-xs-12">
+				 温度数据来自 <a href="https://www.heweather.com/">heweather.com</a>
+				 <br/>作者:<a href="https://github.com/ChongbongWong">ChongbongWong</a> ©
+			<script type="text/javascript">
+				document.write(new Date().getFullYear())
+			</script>
+			.All Rights Reversed
+				</div>
+			
+		</footer>
+	</body>
+</html>
