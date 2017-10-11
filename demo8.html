@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Calculator</title>
+    <style type="text/css">
+        html,body{
+            background-color: #666666;
+        }
+        h1{
+            margin-top: 20px;
+            color: yellow;
+        }
+        button{
+            height: 100px;
+            border: none;
+            float: left;
+            margin: 4px;
+            width: 129.5px;
+            color: #332100;
+            background: #fff;
+            cursor: pointer;
+        }
+        .wrap{
+            text-align: center;
+            width: 600px;
+            height: 720px;
+            border-radius:10px;
+            /*居中*/
+            margin: auto;
+            position: absolute;
+            top: 0;left:0;right: 0;bottom: 0;
+            background-color: #123456;
+            padding: 5px;
+        }
+        .btn-wrap{
+            width: 550px;
+            text-align: center;
+            margin: 20px auto;
+        }
+        
+        #prt{
+            margin-top: 10px;
+            text-align: right;
+            border:none;
+            height: 40px;
+            width: 550px;
+            border-color: #081233;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>Calculator</h1>
+        <input type="textbox" id="prt" name="name" value="" readonly="">
+        <div class="btn-wrap">
+            <button  value="AC">AC</button>
+            <button  value="CE">CE</button>
+            <button  value="%">%</button>
+            <button  value="/">/</button>
+            <button  value="7">7</button>
+            <button  value="8">8</button>
+            <button  value="9">9</button>
+            <button  value="*">*</button>
+            <button  value="4">4</button>
+            <button  value="5">5</button>
+            <button  value="6">6</button>
+            <button  value="-">-</button>
+            <button  value="1">1</button>
+            <button  value="2">2</button>
+            <button  value="3">3</button>
+            <button  value="+">+</button>
+            <button  value=".">.</button>
+            <button  value="0">0</button>
+            <button  value="Ans">Ans</button>
+            <button  value="=">=</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        window.onload = getValues;
+        var values;
+        var txt=[];
+        var prt = document.getElementById("prt");
+        var rel;
+        function getValues(){
+            var btns =document.getElementsByTagName("button");
+            for (var i =0; i <btns.length; i++) {
+                btns[i].onclick = function(){
+                    values=this.value;
+                    switch (values) {
+                        case "Ans":
+
+                        break;
+                        case "=":
+                            rel = eval(txt.join(""));
+                            prt.value = rel;
+                            txt = [];
+                            txt.push(rel);
+                        break;
+                        case "AC":
+                            prt.value = [];
+                            txt = [];
+                        break;
+                        case "CE":
+                            txt.pop();
+                            prt.value = txt.join("");
+                        break;
+                        default:
+                            txt.push(values);
+                            prt.value = txt.join("");
+                        };
+
+               };
+            }
+
+        };
+    </script>
+</body>
+</html>
