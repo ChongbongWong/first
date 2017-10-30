@@ -50,7 +50,7 @@
 		<script type="text/javascript">
 			$(document).ready(function(){
 				var apiKey = '2a2f16ed169f40b1ac9580171db75746';
-				var url ='https://free-api.heweather.com/v5/weather?city=panyu&key='+apiKey;
+				var url ='https://free-api.heweather.com/v5/weather?city=guangzhou&key='+apiKey;
 				$.getJSON(url,function(weatherdata){
 					var weatherInfo = weatherdata.HeWeather5[0];
 					var city = weatherInfo.basic.city + ' , ' +weatherInfo.basic.cnty;
