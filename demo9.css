@@ -8,7 +8,7 @@ html,body{
     background-color: #cb4042;
     overflow: hidden;
 }
-h1{
+h1,h3{
     text-align: center;
     margin-top: 5%;
     color: #fff;
@@ -85,7 +85,7 @@ span{
 .clock h2{
     font-family: 'Bitter', serif;
     font-size: 2.5em;
-    margin-top: 80px;
+    margin-top: 60px;
     color: #fff;
 }
 
