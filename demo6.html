@@ -5,8 +5,9 @@
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.3/jquery.min.js"></script>
 		<style type="text/css">
+			
 			.container{
-				margin-top: 20%;
+				margin-top: 15%;
 				text-align: center;
 			}
 
@@ -15,45 +16,71 @@
 				font-size: 16px;
 				margin-bottom:0;
 			}
+		
+			input {
+			  width: 50%;
+			}
+
+			#content {
+			  margin-top: 5%; margin-bottom:5%;
+			}
+
+			#list {
+			  color: black;
+			  background-color: rgba(166, 166, 166, 0.5);  
+			}
+
+			h3 {
+			  color: black;
+			}
 		</style>
 		<script type="text/javascript">
-			$(document).ready(function(){
-				
-				
-				//静态点击事件，跳转至随机百科条
-				$("#randomBK").click(function(){
-					window.location.href="http://en.wikipedia.org/wiki/Special:Random";
-				});
-
-				$("#searchBT").on('click',function(){
-					var text = $('#search').val();
-					var url= 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + text + '&format=json&callback=?';
-					$.getJSON(url,function(wiki){
-						$("#output").empty();
-						for(var i=0;i<wiki[1].length;i++){
-							$("#output").append("<h2>" + wiki[1][i] + "</h2> <p>" +wiki[2][i] +
-								"</p><a href=" +wiki[3][i] + " target=_blank>Wikipedia Link</a>");
-						}
+			$(document).ready(function(){  
+  				$("#submit").on("click", function(){
+    				$("#result").empty();
+    				var searchTerm = $("#input").val();
+    				var url = "https://en.wikipedia.org/w/api.php?format=json&action=query&generator=search&gsrnamespace=0&gsrlimit=10&prop=pageimages|extracts&pilimit=max&exintro&explaintext&exsentences=1&exlimit=max&gsrsearch=" + searchTerm + "&callback=?";
+    				var openPage = "https://en.wikipedia.org/?curid=";
+    				$.ajax( {
+	    				url: url,
+					    async: false,
+					    dataType: 'json',
+					    type: 'GET',
+					    headers: { 'Api-User-Agent': 'Example/1.0' },
+					    success: function(data) { 
+					       console.log(data);
+					       $("#result").html();
+					      var pageNum = Object.keys(data.query.pages);
+					      for (var i=0; i<pageNum.length; i++) {
+					        openPage = openPage + data.query.pages[pageNum[i]].pageid;
+					        $("#result").append("<div id='list' class='well'><a href="+ openPage+ "><h3>" +data.query.pages[pageNum[i]].title+ "</h3><p>"+data.query.pages[pageNum[i]].extract+"</p> </a></div>");
+					        openPage = "https://en.wikipedia.org/?curid=";
+					        $(".container").css("margin-top","2%");
+					      }			    
+					    
+				    	}
 					});
-				});
+   			});
+			$("#input").keypress(function(e) {
+			    if(e.which == 13) {
+			        e.preventDefault();
+			        $("#submit").click();
+			       	}
+			    });
 			});
 		</script>
 	</head>
 	<body>
 		<div class="container">
-			<div class="jumbotron">
-				<div class="row">
-					<div class="col-xs-12">
-						<p id="randomBK">点击文字获取随机维基百科条</p>
-						
-						<form >
-						<input id="search" name="search" type="text" placeholder="输入搜索内容"/>
-						<button id="searchBT" class="btn btn-default btn-xs">搜索</button>
-						</form>
-						<div id="output"></div>
-					</div>
-				</div>
-			</div>
+  			<h1 class = "text-center"> 维基百科</h1>
+  			<div id="content"  class="text-center">
+    			<input id="input" placeholder = "点此搜索"> </input>
+    			<button id="submit" class= "btn btn-primary">搜索</button>
+    			<a id="random" href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" class="btn btn-primary">Random</a>
+  			</div>
+			<div id="result"></div>
+			<p class="text-center" style=" margin-top: 50px; color: black;">Coded by &nbsp;<a href="https://github.com/ChongbongWong" target="_blank" style="font-family: '宋体'; font-size: 25px; ">ChongbongWong</a></p>
 		</div>
+
 	</body>
 </html>
