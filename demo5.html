@@ -49,16 +49,16 @@
 		</style>	
 		<script type="text/javascript">
 			$(document).ready(function(){
-				var apiKey = '2a2f16ed169f40b1ac9580171db75746';
-				var url ='https://free-api.heweather.com/v5/weather?city=guangzhou&key='+apiKey;
-				$.getJSON(url,function(weatherdata){
+				var apiKey = '5a59d9d40cf22691fa923625';
+				var url ='http://route.showapi.com/255-1?showapi_appid=54190&showapi_sign='+apiKey;
+				$.getJSON('http://route.showapi.com/255-1?showapi_appid=54190&type=29&title=&page=1&showapi_sign=5a59d9d40cf22691fa923625',function(b){
 					var weatherInfo = weatherdata.HeWeather5[0];
 					var city = weatherInfo.basic.city + ' , ' +weatherInfo.basic.cnty;
-
+					var a = b.subjects[0].title;
 					var weather = weatherInfo.now.cond.txt;
 
 					var temp = weatherInfo.now.tmp;
-
+					  $('#w').append('<p>' + b + '</p>');
 					$('#city').html(city);
 					$('#weather').html(weather);
 					$('#temp').html(temp + '℃');
@@ -101,8 +101,8 @@
 	<body>
 		<div class="container-fluid">
 			<div class="weather-container">
-				<div class="text-center">
-					<h1 id="city"></h1>
+				<div id="w" class="text-center">
+					<h1 id="q"></h1>
 					<div id="weather"></div>
 					<div id="temp"></div>
 					<button id="deg-fa" class="btn btn-default btn-xs">摄氏度℃ /华氏度℉</button>
